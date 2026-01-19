@@ -2,11 +2,11 @@
   "name": "graze",
   "version": "0.0.0",
   "scripts": {
-    "ng": "graze/node_modules/.bin/ng",
-    "start": "graze/node_modules/.bin/ng serve",
-    "build": "graze/node_modules/.bin/ng build",
-    "watch": "graze/node_modules/.bin/ng build --watch --configuration development",
-    "test": "graze/node_modules/.bin/ng test"
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build --watch",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
   },
   "prettier": {
     "overrides": [
