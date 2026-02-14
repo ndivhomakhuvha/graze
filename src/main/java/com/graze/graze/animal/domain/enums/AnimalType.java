@@ -1,4 +1,4 @@
-package com.graze.graze.animal.domain;
+package com.graze.graze.animal.domain.enums;
 
 public enum AnimalType {
   COW,

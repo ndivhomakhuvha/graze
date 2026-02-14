@@ -2,6 +2,7 @@ package com.graze.graze.health.domain;
 
 
 import com.graze.graze.animal.domain.Animal;
+import com.graze.graze.health.domain.enums.RecordStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 

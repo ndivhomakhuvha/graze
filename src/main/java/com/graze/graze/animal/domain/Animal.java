@@ -1,5 +1,8 @@
 package com.graze.graze.animal.domain;
 
+import com.graze.graze.animal.domain.enums.AnimalType;
+import com.graze.graze.animal.domain.enums.Color;
+import com.graze.graze.animal.domain.enums.Gender;
 import com.graze.graze.animal.generators.AnimalTagId;
 import com.graze.graze.health.domain.HealthRecord;
 import jakarta.annotation.Nullable;
