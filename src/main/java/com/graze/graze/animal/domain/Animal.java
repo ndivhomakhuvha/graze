@@ -1,6 +1,8 @@
 package com.graze.graze.animal.domain;
 
 import com.graze.graze.animal.generators.AnimalTagId;
+import com.graze.graze.health.domain.HealthRecord;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import lombok.Data;
@@ -32,17 +34,25 @@ public class Animal {
   // Parents
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "mother_id")
+  @Nullable
   private Animal mother;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "father_id")
+  @Nullable
   private Animal father;
 
   // Children
   @OneToMany(mappedBy = "mother")
+  @Nullable
   private List<Animal> childrenFromMother = new ArrayList<>();
 
+  @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<HealthRecord> healthRecords = new ArrayList<>();
+
+
   @OneToMany(mappedBy = "father")
+  @Nullable
   private List<Animal> childrenFromFather = new ArrayList<>();
 
   public void setParents(Animal mother, Animal father) {

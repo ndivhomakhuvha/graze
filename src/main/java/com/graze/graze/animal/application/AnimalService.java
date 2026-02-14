@@ -14,6 +14,6 @@ public class AnimalService {
   }
 
   public void register(Animal animal) {
-    publisher.publishEvent(new AnimalRegistered(animal.getTagNo(), animal.getName(), animal.getType().name()));
+    publisher.publishEvent(new AnimalRegistered(animal));
   }
 }
