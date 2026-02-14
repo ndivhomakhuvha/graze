@@ -2,9 +2,9 @@ spring:
   application:
     name: graze
   datasource:
-    url:
-    username:
-    password:
+    url: jdbc:postgresql://localhost:5433/graze
+    username: graze_user
+    password: graze_password
   jpa:
     hibernate:
       ddl-auto: validate

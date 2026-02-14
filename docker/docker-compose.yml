@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: graze-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: graze
+      POSTGRES_USER: graze_user
+      POSTGRES_PASSWORD: graze_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
