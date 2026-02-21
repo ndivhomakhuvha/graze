@@ -15,9 +15,9 @@ public class AnimalController {
   }
 
   @PostMapping
-  public AnimalDto register(
+  public void register(
     @RequestBody Animal animal
   ) {
-   return service.register(animal);
+    service.register(animal);
   }
 }

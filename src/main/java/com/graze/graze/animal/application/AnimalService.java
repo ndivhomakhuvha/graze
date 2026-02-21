@@ -14,7 +14,7 @@ public class AnimalService {
     this.publisher = publisher;
   }
 
-  public AnimalDto register(Animal animal) {
+  public void register(Animal animal) {
     publisher.publishEvent(new AnimalRegistered(animal));
   }
 }
