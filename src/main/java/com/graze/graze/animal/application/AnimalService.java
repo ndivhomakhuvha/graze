@@ -1,6 +1,7 @@
 package com.graze.graze.animal.application;
 
 import com.graze.graze.animal.domain.Animal;
+import com.graze.graze.animal.domain.dto.AnimalDto;
 import com.graze.graze.animal.events.AnimalRegistered;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class AnimalService {
     this.publisher = publisher;
   }
 
-  public void register(Animal animal) {
+  public AnimalDto register(Animal animal) {
     publisher.publishEvent(new AnimalRegistered(animal));
   }
 }
