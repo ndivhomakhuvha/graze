@@ -1,11 +1,11 @@
 CREATE TABLE animal_sequence
 (
-  gender      CHAR(1) NOT NULL PRIMARY KEY,
-  last_number INT     NOT NULL DEFAULT 0
+  gender      VARCHAR(10) NOT NULL PRIMARY KEY,
+  next_value  INT         NOT NULL DEFAULT 1
 );
 
 -- Seed initial values
-INSERT INTO animal_sequence (gender, last_number)
-VALUES ('M', 0);
-INSERT INTO animal_sequence (gender, last_number)
-VALUES ('F', 0);
+INSERT INTO animal_sequence (gender, next_value)
+VALUES ('MALE', 1);
+INSERT INTO animal_sequence (gender, next_value)
+VALUES ('FEMALE', 1);
