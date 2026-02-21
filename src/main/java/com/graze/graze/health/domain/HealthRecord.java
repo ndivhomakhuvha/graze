@@ -19,7 +19,7 @@ public class HealthRecord {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(
     name = "animal_tag_no",           // FK column in health_record table
-    referencedColumnName = "tagNo",   // PK in Animal
+    referencedColumnName = "tag_no",  // PK column in Animal table
     nullable = false
   )
   private Animal animal;

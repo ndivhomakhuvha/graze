@@ -20,6 +20,7 @@ import java.util.List;
 public class Animal {
   @Id
   @AnimalTagId
+  @Column(name = "tag_no")
   private String tagNo;
   private String name;
   @Enumerated(EnumType.STRING)
