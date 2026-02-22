@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class HealthService {
   public void createRecord(AnimalRegistered animalRegistered) {
-    System.out.println("Health record created for " + animalRegistered.animal().getTagNo());
+    System.out.println("Health record created for " + animalRegistered.tagNo());
   }
 }
