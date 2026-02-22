@@ -21,8 +21,8 @@ public class AnimalTagGenerator implements BeforeExecutionGenerator {
     String genderKey = animal.getGender().name();
     String prefix = animal.getGender().name().substring(0, 1);
 
-    BigInteger nextValue = (BigInteger) session.createNativeQuery(
-        "select next_value from animal_sequence where gender = :gender for update")
+    Number nextValue = (Number) session.createNativeQuery(
+        "select next_value from graze.animal_sequence where gender = :gender for update")
       .setParameter("gender", genderKey)
       .uniqueResult();
 
@@ -31,7 +31,7 @@ public class AnimalTagGenerator implements BeforeExecutionGenerator {
     }
 
     session.createNativeQuery(
-        "update animal_sequence set next_value = next_value + 1 where gender = :gender")
+        "update graze.animal_sequence set next_value = next_value + 1 where gender = :gender")
       .setParameter("gender", genderKey)
       .executeUpdate();
 

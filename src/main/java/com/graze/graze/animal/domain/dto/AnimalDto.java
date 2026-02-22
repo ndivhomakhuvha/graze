@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 @Data
 public class AnimalDto {
+  private String tagNo;
   private String name;
   private Color color;
   private AnimalType type;
