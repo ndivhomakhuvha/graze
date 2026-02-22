@@ -5,6 +5,11 @@ spring:
     url: jdbc:postgresql://localhost:5433/graze
     username: graze_user
     password: graze_password
+  flyway:
+    enabled: true
+    schemas: graze
+    default-schema: graze
+    create-schemas: true
   jpa:
     hibernate:
       ddl-auto: validate
@@ -12,9 +17,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_schema: graze
 logging:
   level:
     org.flywaydb: DEBUG
     org.springframework.boot.autoconfigure.flyway: DEBUG
-
-

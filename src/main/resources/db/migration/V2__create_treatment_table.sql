@@ -1,5 +1,5 @@
 -- Table: treatment
-CREATE TABLE treatment
+CREATE TABLE graze.treatment
 (
   id                    BIGSERIAL PRIMARY KEY,
   name                  VARCHAR(255) NOT NULL,
