@@ -8,12 +8,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class AnimalRegisteredListeners {
   private final HealthService healthService;
+
   public AnimalRegisteredListeners(HealthService healthService) {
     this.healthService = healthService;
   }
 
   @EventListener
   void on(AnimalRegistered event) {
-    healthService.createRecord(event);
+    healthService.createInitialRecord(event.tagNo());
   }
 }
