@@ -5,6 +5,11 @@
   "verifyEmail": true,
   "ssoSessionIdleTimeout": 86400,
   "enabled": true,
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": false,
+  "defaultGroups": [
+    "/worker"
+  ],
   "smtpServer": {
     "host": "sandbox.smtp.mailtrap.io",
     "port": "587",
@@ -16,21 +21,6 @@
     "starttls": "true"
   },
   "users": [
-    {
-      "username": "service-account-admin-cli",
-      "enabled": true,
-      "totp": false,
-      "serviceAccountClientId": "admin-cli",
-      "realmRoles": [
-        "default-roles-graze-realm"
-      ],
-      "clientRoles": {
-        "realm-management": [
-          "manage-users",
-          "manage-clients"
-        ]
-      }
-    },
     {
       "username": "AdminUser",
       "email": "admin.user@graze.example.com",
@@ -302,20 +292,6 @@
       "standardFlowEnabled": false,
       "implicitFlowEnabled": false,
       "directAccessGrantsEnabled": false,
-      "serviceAccountsEnabled": true,
-      "publicClient": false
-    },
-    {
-      "clientId": "admin-cli",
-      "name": "${client_admin-cli}",
-      "surrogateAuthRequired": false,
-      "enabled": true,
-      "clientAuthenticatorType": "client-secret",
-      "secret": "nscpsQyNICIBxoKfAby3kTD5clv6KwIm",
-      "redirectUris": [],
-      "standardFlowEnabled": false,
-      "implicitFlowEnabled": false,
-      "directAccessGrantsEnabled": true,
       "serviceAccountsEnabled": true,
       "publicClient": false
     }
