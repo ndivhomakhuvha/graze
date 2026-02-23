@@ -3,8 +3,8 @@ package com.graze.graze.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+@EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
 
@@ -30,15 +31,11 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
       .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-      // CSRF protection is disabled because this API uses stateless JWT Bearer token
-      // authentication. Tokens must be explicitly set in the Authorization header, so
-      // they cannot be sent by a cross-site request without JavaScript access (which
-      // is prevented by CORS), making CSRF attacks inapplicable.
       .csrf(csrf -> csrf.disable())
       .sessionManagement(session ->
         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .headers(headers -> headers
-        .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'none'; frame-ancestors 'none'"))
+        .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none'"))
         .referrerPolicy(referrer -> {
         })
       )
