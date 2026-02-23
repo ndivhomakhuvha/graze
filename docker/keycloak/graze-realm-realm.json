@@ -1,7 +1,8 @@
 {
   "realm": "graze-realm",
   "displayName": "Graze Livestock Management",
-  "accessTokenLifespan": 43200,
+  "accessTokenLifespan": 900,
+  "verifyEmail": true,
   "ssoSessionIdleTimeout": 86400,
   "enabled": true,
   "smtpServer": {
