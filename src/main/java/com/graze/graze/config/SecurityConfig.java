@@ -42,12 +42,12 @@ public class SecurityConfig {
         .referrerPolicy(referrer -> {})
       )
       .authorizeHttpRequests(auth -> auth
+        .requestMatchers("/actuator/health").permitAll()
         .requestMatchers(
-          "/actuator/health",
           "/v3/api-docs/**",
           "/swagger-ui/**",
           "/swagger-ui.html"
-        ).permitAll()
+        ).authenticated()
 
         // Animal endpoints
         .requestMatchers(HttpMethod.GET, "/animals/**").hasRole("view-animal")
