@@ -16,7 +16,6 @@ public interface AnimalMapper {
   @Mapping(target = "father", ignore = true)
   @Mapping(target = "childrenFromMother", ignore = true)
   @Mapping(target = "childrenFromFather", ignore = true)
-  @Mapping(target = "healthRecords", ignore = true)
   Animal toAnimal(AnimalDto dto);
 
   @Mapping(source = "mother.tagNo", target = "motherTagNo")
@@ -30,6 +29,5 @@ public interface AnimalMapper {
   @Mapping(target = "father", ignore = true)
   @Mapping(target = "childrenFromMother", ignore = true)
   @Mapping(target = "childrenFromFather", ignore = true)
-  @Mapping(target = "healthRecords", ignore = true)
   void updateAnimalFromDto(AnimalDto dto, @MappingTarget Animal animal);
 }

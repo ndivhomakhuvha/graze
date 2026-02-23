@@ -4,7 +4,6 @@ import com.graze.graze.animal.domain.enums.AnimalType;
 import com.graze.graze.animal.domain.enums.Color;
 import com.graze.graze.animal.domain.enums.Gender;
 import com.graze.graze.animal.generators.AnimalTagId;
-import com.graze.graze.health.domain.HealthRecord;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
@@ -50,9 +49,6 @@ public class Animal {
   @OneToMany(mappedBy = "mother")
   @Nullable
   private List<Animal> childrenFromMother = new ArrayList<>();
-
-  @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<HealthRecord> healthRecords = new ArrayList<>();
 
 
   @OneToMany(mappedBy = "father")

@@ -1,43 +1,61 @@
 {
-  "hash": "2907362b",
-  "configHash": "45920ed2",
-  "lockfileHash": "57dd56e8",
-  "browserHash": "78225a22",
+  "hash": "d4aafab6",
+  "configHash": "6c4b6c75",
+  "lockfileHash": "ad5c3689",
+  "browserHash": "7e21c33b",
   "optimized": {
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "074da771",
+      "fileHash": "505424b8",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "be51c8ff",
+      "fileHash": "81751ace",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "a9d73769",
+      "fileHash": "b4c82b77",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "7532e818",
+      "fileHash": "a895ce54",
+      "needsInterop": false
+    },
+    "keycloak-js": {
+      "src": "../../../../../../node_modules/keycloak-js/lib/keycloak.js",
+      "file": "keycloak-js.js",
+      "fileHash": "bab19932",
+      "needsInterop": false
+    },
+    "rxjs": {
+      "src": "../../../../../../node_modules/rxjs/dist/esm5/index.js",
+      "file": "rxjs.js",
+      "fileHash": "3599cdec",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-EZ3O2W3K": {
-      "file": "chunk-EZ3O2W3K.js"
+    "chunk-RCFGDYU6": {
+      "file": "chunk-RCFGDYU6.js"
     },
-    "chunk-PCK4OW37": {
-      "file": "chunk-PCK4OW37.js"
+    "chunk-XEQIOSQQ": {
+      "file": "chunk-XEQIOSQQ.js"
     },
-    "chunk-75V7EJED": {
-      "file": "chunk-75V7EJED.js"
+    "chunk-KVA7HTYV": {
+      "file": "chunk-KVA7HTYV.js"
+    },
+    "chunk-RSS3ODKE": {
+      "file": "chunk-RSS3ODKE.js"
+    },
+    "chunk-GOMI4DH3": {
+      "file": "chunk-GOMI4DH3.js"
     }
   }
 }
