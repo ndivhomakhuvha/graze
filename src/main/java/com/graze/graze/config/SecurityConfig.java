@@ -39,43 +39,20 @@ public class SecurityConfig {
         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .headers(headers -> headers
         .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'none'; frame-ancestors 'none'"))
-        .referrerPolicy(referrer -> {})
+        .referrerPolicy(referrer -> {
+        })
       )
       .authorizeHttpRequests(auth -> auth
         .requestMatchers("/actuator/health").permitAll()
         .requestMatchers(
-          "/v3/api-docs/**",
           "/swagger-ui/**",
-          "/swagger-ui.html"
-        ).authenticated()
-
-        // Animal endpoints
-        .requestMatchers(HttpMethod.GET, "/animals/**").hasRole("view-animal")
-        .requestMatchers(HttpMethod.POST, "/animals/**").hasRole("manage-animal")
-        .requestMatchers(HttpMethod.PUT, "/animals/**").hasRole("manage-animal")
-        .requestMatchers(HttpMethod.DELETE, "/animals/**").hasRole("manage-animal")
-
-        // Health-record endpoints
-        .requestMatchers(HttpMethod.GET, "/health-records/**").hasRole("view-health")
-        .requestMatchers(HttpMethod.POST, "/health-records/**").hasRole("manage-health")
-        .requestMatchers(HttpMethod.PUT, "/health-records/**").hasRole("manage-health")
-        .requestMatchers(HttpMethod.PATCH, "/health-records/**").hasRole("manage-health")
-        .requestMatchers(HttpMethod.DELETE, "/health-records/**").hasRole("manage-health")
-
-        // Treatment endpoints
-        .requestMatchers(HttpMethod.GET, "/treatments/**").hasRole("view-health")
-        .requestMatchers(HttpMethod.POST, "/treatments/**").hasRole("manage-health")
-        .requestMatchers(HttpMethod.PUT, "/treatments/**").hasRole("manage-health")
-        .requestMatchers(HttpMethod.DELETE, "/treatments/**").hasRole("manage-health")
-
-        // Finance endpoints
-        .requestMatchers(HttpMethod.GET, "/finances/**").hasRole("view-finances")
-        .requestMatchers(HttpMethod.POST, "/finances/**").hasRole("manage-finances")
-        .requestMatchers(HttpMethod.PUT, "/finances/**").hasRole("manage-finances")
-        .requestMatchers(HttpMethod.DELETE, "/finances/**").hasRole("manage-finances")
-
-        // Deny everything else by default
-        .anyRequest().denyAll()
+          "/swagger-ui.html",
+          "/v3/api-docs/**",
+          "/v3/api-docs.yaml",
+          "/webjars/**"
+        ).permitAll()
+        .anyRequest()
+        .authenticated()
       )
       .oauth2ResourceServer(oauth2 -> oauth2
         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
