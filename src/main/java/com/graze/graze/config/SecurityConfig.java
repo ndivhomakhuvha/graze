@@ -3,38 +3,28 @@ package com.graze.graze.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Configuration
-@EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class SecurityConfig {
-
-  @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
-  private String jwkSetUri;
 
   @Value("${graze.cors.allowed-origins:http://localhost:4200}")
   private String corsAllowedOrigins;
+
+  @Value("${graze.keycloak.client-id:graze-app}")
+  private String keycloakClientId;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -47,6 +37,10 @@ public class SecurityConfig {
       .csrf(csrf -> csrf.disable())
       .sessionManagement(session ->
         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+      .headers(headers -> headers
+        .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'none'; frame-ancestors 'none'"))
+        .referrerPolicy(referrer -> {})
+      )
       .authorizeHttpRequests(auth -> auth
         .requestMatchers(
           "/actuator/health",
@@ -54,7 +48,34 @@ public class SecurityConfig {
           "/swagger-ui/**",
           "/swagger-ui.html"
         ).permitAll()
-        .anyRequest().authenticated()
+
+        // Animal endpoints
+        .requestMatchers(HttpMethod.GET, "/animals/**").hasRole("view-animal")
+        .requestMatchers(HttpMethod.POST, "/animals/**").hasRole("manage-animal")
+        .requestMatchers(HttpMethod.PUT, "/animals/**").hasRole("manage-animal")
+        .requestMatchers(HttpMethod.DELETE, "/animals/**").hasRole("manage-animal")
+
+        // Health-record endpoints
+        .requestMatchers(HttpMethod.GET, "/health-records/**").hasRole("view-health")
+        .requestMatchers(HttpMethod.POST, "/health-records/**").hasRole("manage-health")
+        .requestMatchers(HttpMethod.PUT, "/health-records/**").hasRole("manage-health")
+        .requestMatchers(HttpMethod.PATCH, "/health-records/**").hasRole("manage-health")
+        .requestMatchers(HttpMethod.DELETE, "/health-records/**").hasRole("manage-health")
+
+        // Treatment endpoints
+        .requestMatchers(HttpMethod.GET, "/treatments/**").hasRole("view-health")
+        .requestMatchers(HttpMethod.POST, "/treatments/**").hasRole("manage-health")
+        .requestMatchers(HttpMethod.PUT, "/treatments/**").hasRole("manage-health")
+        .requestMatchers(HttpMethod.DELETE, "/treatments/**").hasRole("manage-health")
+
+        // Finance endpoints
+        .requestMatchers(HttpMethod.GET, "/finances/**").hasRole("view-finances")
+        .requestMatchers(HttpMethod.POST, "/finances/**").hasRole("manage-finances")
+        .requestMatchers(HttpMethod.PUT, "/finances/**").hasRole("manage-finances")
+        .requestMatchers(HttpMethod.DELETE, "/finances/**").hasRole("manage-finances")
+
+        // Deny everything else by default
+        .anyRequest().denyAll()
       )
       .oauth2ResourceServer(oauth2 -> oauth2
         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
@@ -63,14 +84,9 @@ public class SecurityConfig {
   }
 
   @Bean
-  public JwtDecoder jwtDecoder() {
-    return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
-  }
-
-  @Bean
   public JwtAuthenticationConverter jwtAuthenticationConverter() {
     JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-    converter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
+    converter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter(keycloakClientId));
     return converter;
   }
 
@@ -79,48 +95,11 @@ public class SecurityConfig {
     CorsConfiguration config = new CorsConfiguration();
     config.setAllowedOrigins(Arrays.asList(corsAllowedOrigins.split(",")));
     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-    config.setAllowedHeaders(List.of("*"));
+    config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
     config.setAllowCredentials(true);
+    config.setMaxAge(3600L);
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", config);
     return source;
-  }
-
-  /**
-   * Converts Keycloak client roles from the JWT token's {@code roles} claim
-   * (mapped via a Keycloak protocol mapper) into Spring Security {@link GrantedAuthority}
-   * instances using the {@code ROLE_} prefix convention.
-   */
-  static class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
-
-    @Override
-    public Collection<GrantedAuthority> convert(Jwt jwt) {
-      // Primary: roles claim mapped by the Keycloak "Client Roles" protocol mapper
-      List<String> roles = jwt.getClaimAsStringList("roles");
-      if (roles != null && !roles.isEmpty()) {
-        return roles.stream()
-          .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-          .collect(Collectors.toList());
-      }
-
-      // Fallback: standard resource_access claim
-      Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
-      if (resourceAccess == null) {
-        return List.of();
-      }
-      @SuppressWarnings("unchecked")
-      Map<String, Object> clientAccess = (Map<String, Object>) resourceAccess.get("graze-app");
-      if (clientAccess == null) {
-        return List.of();
-      }
-      @SuppressWarnings("unchecked")
-      List<String> clientRoles = (List<String>) clientAccess.get("roles");
-      if (clientRoles == null) {
-        return List.of();
-      }
-      return clientRoles.stream()
-        .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-        .collect(Collectors.toList());
-    }
   }
 }
