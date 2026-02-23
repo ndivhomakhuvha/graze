@@ -1,0 +1,322 @@
+{
+  "realm": "graze-realm",
+  "displayName": "Graze Livestock Management",
+  "accessTokenLifespan": 43200,
+  "ssoSessionIdleTimeout": 86400,
+  "enabled": true,
+  "smtpServer": {
+    "host": "sandbox.smtp.mailtrap.io",
+    "port": "587",
+    "from": "graze@example.com",
+    "auth": "true",
+    "user": "4dd6191b588646",
+    "password": "b43673af475736",
+    "ssl": "false",
+    "starttls": "true"
+  },
+  "users": [
+    {
+      "username": "service-account-admin-cli",
+      "enabled": true,
+      "totp": false,
+      "serviceAccountClientId": "admin-cli",
+      "realmRoles": [
+        "default-roles-graze-realm"
+      ],
+      "clientRoles": {
+        "realm-management": [
+          "manage-users",
+          "manage-clients"
+        ]
+      }
+    },
+    {
+      "username": "AdminUser",
+      "email": "admin.user@graze.example.com",
+      "firstName": "Admin",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password1"
+        }
+      ],
+      "groups": [
+        "/admin"
+      ]
+    },
+    {
+      "username": "ManagerUser",
+      "email": "manager.user@graze.example.com",
+      "firstName": "Manager",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password1"
+        }
+      ],
+      "groups": [
+        "/manager"
+      ]
+    },
+    {
+      "username": "VetUser",
+      "email": "vet.user@graze.example.com",
+      "firstName": "Veterinarian",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password1"
+        }
+      ],
+      "groups": [
+        "/veterinarian"
+      ]
+    },
+    {
+      "username": "WorkerUser",
+      "email": "worker.user@graze.example.com",
+      "firstName": "Worker",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password1"
+        }
+      ],
+      "groups": [
+        "/worker"
+      ]
+    },
+    {
+      "username": "OwnerUser",
+      "email": "owner.user@graze.example.com",
+      "firstName": "Owner",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password1"
+        }
+      ],
+      "groups": [
+        "/owner"
+      ]
+    }
+  ],
+  "roles": {
+    "client": {
+      "graze-app": [
+        {
+          "name": "view-animal",
+          "description": "View animals in the system",
+          "composite": false,
+          "clientRole": true
+        },
+        {
+          "name": "manage-animal",
+          "description": "Create, update, and delete animals",
+          "composite": true,
+          "composites": {
+            "client": {
+              "graze-app": [
+                "view-animal"
+              ]
+            }
+          },
+          "clientRole": true
+        },
+        {
+          "name": "view-health",
+          "description": "View health records",
+          "composite": false,
+          "clientRole": true
+        },
+        {
+          "name": "manage-health",
+          "description": "Create, update, and delete health records",
+          "composite": true,
+          "composites": {
+            "client": {
+              "graze-app": [
+                "view-health"
+              ]
+            }
+          },
+          "clientRole": true
+        },
+        {
+          "name": "view-finances",
+          "description": "View financial records",
+          "composite": false,
+          "clientRole": true
+        },
+        {
+          "name": "manage-finances",
+          "description": "Create, update, and delete financial records",
+          "composite": true,
+          "composites": {
+            "client": {
+              "graze-app": [
+                "view-finances"
+              ]
+            }
+          },
+          "clientRole": true
+        }
+      ]
+    }
+  },
+  "groups": [
+    {
+      "name": "admin",
+      "path": "/admin",
+      "clientRoles": {
+        "graze-app": [
+          "manage-animal",
+          "manage-health",
+          "manage-finances"
+        ]
+      }
+    },
+    {
+      "name": "owner",
+      "path": "/owner",
+      "clientRoles": {
+        "graze-app": [
+          "manage-animal",
+          "manage-health",
+          "manage-finances"
+        ]
+      }
+    },
+    {
+      "name": "manager",
+      "path": "/manager",
+      "clientRoles": {
+        "graze-app": [
+          "manage-animal",
+          "manage-health",
+          "view-finances"
+        ]
+      }
+    },
+    {
+      "name": "veterinarian",
+      "path": "/veterinarian",
+      "clientRoles": {
+        "graze-app": [
+          "view-animal",
+          "manage-health"
+        ]
+      }
+    },
+    {
+      "name": "worker",
+      "path": "/worker",
+      "clientRoles": {
+        "graze-app": [
+          "view-animal",
+          "view-health"
+        ]
+      }
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "graze-app",
+      "name": "Graze Livestock Management",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "graze-app-secret-change-in-prod",
+      "redirectUris": [
+        "http://localhost:4200/*",
+        "http://localhost:8080/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4200",
+        "http://localhost:8080"
+      ],
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "protocolMappers": [
+        {
+          "name": "Groups Membership",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-group-membership-mapper",
+          "consentRequired": false,
+          "config": {
+            "full.path": "true",
+            "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "multivalued": "true",
+            "id.token.claim": "true",
+            "lightweight.claim": "false",
+            "access.token.claim": "true",
+            "claim.name": "groups"
+          }
+        },
+        {
+          "name": "Client Roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-client-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "usermodel.clientRoleMapping.clientId": "graze-app"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "graze-backend",
+      "name": "Graze Backend API",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "graze-backend-secret-change-in-prod",
+      "redirectUris": [],
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "publicClient": false
+    },
+    {
+      "clientId": "admin-cli",
+      "name": "${client_admin-cli}",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "nscpsQyNICIBxoKfAby3kTD5clv6KwIm",
+      "redirectUris": [],
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "publicClient": false
+    }
+  ]
+}
