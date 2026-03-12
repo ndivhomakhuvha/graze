@@ -8,15 +8,15 @@ export { TransactionType } from './enums/transaction-type.enum';
 export { FinanceCategory } from './enums/finance-category.enum';
 export { RecordStatus } from './enums/record-status.enum';
 
-export type { CreateAndEditAnimalDTO } from './models/create-and-edit-animal-dto.model';
-export type { AnimalOwnerDto } from './models/animal-owner-dto.model';
-export type { AnimalDto } from './models/animal-dto.model';
-export type { CreateAndUpdateFinanceDTO } from './models/create-and-update-finance-dto.model';
-export type { FinanceDto } from './models/finance-dto.model';
-export type { FinanceSummaryDto } from './models/finance-summary-dto.model';
-export type { CreateAndUpdateHealthRecordDto } from './models/create-and-update-health-record-dto.model';
-export type { HealthRecordDto } from './models/health-record-dto.model';
-export type { TreatmentDto } from './models/treatment-dto.model';
+export { CreateAndEditAnimalDTO } from './models/create-and-edit-animal-dto.model';
+export { AnimalOwnerDto } from './models/animal-owner-dto.model';
+export { AnimalDto } from './models/animal-dto.model';
+export { CreateAndUpdateFinanceDTO } from './models/create-and-update-finance-dto.model';
+export { FinanceDto } from './models/finance-dto.model';
+export { FinanceSummaryDto } from './models/finance-summary-dto.model';
+export { CreateAndUpdateHealthRecordDto } from './models/create-and-update-health-record-dto.model';
+export { HealthRecordDto } from './models/health-record-dto.model';
+export { TreatmentDto } from './models/treatment-dto.model';
 
 export { AnimalService } from './services/animal.service';
 export { FinanceService } from './services/finance.service';
