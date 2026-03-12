@@ -1,1 +1,1 @@
- ./mvnw clean compile -q 2>&1 | tail -20
+ ./mvnw clean compile 2>&1
