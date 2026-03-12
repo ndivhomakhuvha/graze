@@ -5,12 +5,13 @@ import com.graze.graze.animal.domain.dto.AnimalDto;
 import com.graze.graze.animal.domain.dto.CreateAndEditAnimalDTO;
 import com.graze.graze.animal.domain.enums.AnimalType;
 import com.graze.graze.animal.domain.enums.Gender;
+import com.graze.tsgen.TypeScriptEndpoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@TypeScriptEndpoint
 @RestController
 @RequestMapping("/animals")
 public class AnimalController {

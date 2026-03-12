@@ -4,12 +4,14 @@ import com.graze.graze.health.application.HealthService;
 import com.graze.graze.health.domain.dto.CreateAndUpdateHealthRecordDto;
 import com.graze.graze.health.domain.dto.HealthRecordDto;
 import com.graze.graze.health.domain.enums.RecordStatus;
+import com.graze.tsgen.TypeScriptEndpoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@TypeScriptEndpoint
 @RestController
 @RequestMapping("/health-records")
 public class HealthRecordController {

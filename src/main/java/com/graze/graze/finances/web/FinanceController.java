@@ -6,6 +6,7 @@ import com.graze.graze.finances.domain.dto.FinanceDto;
 import com.graze.graze.finances.domain.dto.FinanceSummaryDto;
 import com.graze.graze.finances.domain.enums.FinanceCategory;
 import com.graze.graze.finances.domain.enums.TransactionType;
+import com.graze.tsgen.TypeScriptEndpoint;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@TypeScriptEndpoint
 @RestController
 @RequestMapping("/finances")
 public class FinanceController {
