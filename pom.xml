@@ -16,6 +16,7 @@
   <name>graze</name>
   <description>Graze project for livestock management</description>
 
+
   <properties>
     <java.version>25</java.version>
     <spring-modulith.version>2.0.1</spring-modulith.version>
@@ -106,6 +107,13 @@
       <artifactId>spring-modulith-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.graze</groupId>
+      <artifactId>ts-generator</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -137,7 +145,15 @@
               <artifactId>mapstruct-processor</artifactId>
               <version>${org.mapstruct.version}</version>
             </path>
+            <path>
+              <groupId>com.graze</groupId>
+              <artifactId>ts-generator</artifactId>
+              <version>0.0.1-SNAPSHOT</version>
+            </path>
           </annotationProcessorPaths>
+          <compilerArgs>
+            <arg>-Ats.output=src/app/shared/api</arg>
+          </compilerArgs>
         </configuration>
       </plugin>
     </plugins>

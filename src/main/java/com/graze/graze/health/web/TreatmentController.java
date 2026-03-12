@@ -2,12 +2,14 @@ package com.graze.graze.health.web;
 
 import com.graze.graze.health.application.HealthService;
 import com.graze.graze.health.domain.dto.TreatmentDto;
+import com.graze.tsgen.TypeScriptEndpoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@TypeScriptEndpoint
 @RestController
 @RequestMapping("/treatments")
 public class TreatmentController {
