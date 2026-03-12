@@ -428,7 +428,7 @@ public class TypeScriptEndpointProcessor extends AbstractProcessor {
         if (!discoveredEnums.isEmpty()) sb.append('\n');
 
         for (TypeElement m : discoveredModels)
-            sb.append("export { ").append(m.getSimpleName())
+            sb.append("export type { ").append(m.getSimpleName())
               .append(" } from './models/").append(toKebab(m.getSimpleName().toString()))
               .append(".model';\n");
         if (!discoveredModels.isEmpty()) sb.append('\n');
