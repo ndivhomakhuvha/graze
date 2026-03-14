@@ -12,10 +12,29 @@ set -eu
 
 # ── Resolve project root (directory containing pom.xml) ─────────────
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../../../../../.." && pwd)"
 
-if [ ! -f "$PROJECT_ROOT/pom.xml" ]; then
-  echo "❌  Could not locate project root (expected pom.xml in $PROJECT_ROOT)"
+# First, try to use the Git repository root if available.
+if command -v git >/dev/null 2>&1; then
+  GIT_ROOT="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel 2>/dev/null || true)"
+  if [ -n "${GIT_ROOT:-}" ] && [ -f "$GIT_ROOT/pom.xml" ]; then
+    PROJECT_ROOT="$GIT_ROOT"
+  fi
+fi
+
+# If Git is unavailable or unsuitable, walk up from SCRIPT_DIR to find pom.xml.
+if [ -z "${PROJECT_ROOT:-}" ]; then
+  SEARCH_DIR="$SCRIPT_DIR"
+  while [ "$SEARCH_DIR" != "/" ]; do
+    if [ -f "$SEARCH_DIR/pom.xml" ]; then
+      PROJECT_ROOT="$SEARCH_DIR"
+      break
+    fi
+    SEARCH_DIR="$(dirname "$SEARCH_DIR")"
+  done
+fi
+
+if [ -z "${PROJECT_ROOT:-}" ]; then
+  echo "❌  Could not locate project root (pom.xml not found above $SCRIPT_DIR)"
   exit 1
 fi
 
